@@ -1,8 +1,7 @@
 // "require"是node.js模块化内的关键字，用于引入模块
+
 require('dotenv').config(); // 引入dotenv模块的config()方法，用于读取.env文件，将文件中的变量写入系统环境变量
 const OpenAI = require('openai'); // 从node_modules中引入openai-api模块
-
-// const getChatResponse = require('./GetChatResponse').getChatResponse(); // 引入GetChatResponse.js文件
 
 console.log("你的OpenAI Key是:", process.env.OPENAI_API_KEY); // 打印.env文件中的OPENAI_API_KEY变量
 
@@ -12,7 +11,7 @@ const client = new OpenAI({
 });
 
 // async是异步函数的关键字，用于定义异步函数
-// 入口函数
+
 async function example1() {
     
     // 反引号``是ES6的模板字符串
