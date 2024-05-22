@@ -1,4 +1,11 @@
-// 将对话生成封装成一个函数
+require('dotenv').config();
+const OpenAI = require('openai');
+
+const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    baseURL: 'https://api.chatanywhere.tech/v1',
+});
+
 const getChatResponse = async function(model, n, prompt) {
     const chatCompletion = await client.chat.completions.create({
         model: model,

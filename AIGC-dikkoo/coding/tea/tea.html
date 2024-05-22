@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板方式模式</title>
+</head>
+<body>
+    <script>
+
+        // 茶类，类的命名一般首字母大写，使用大驼峰命名法
+        // var是es5的写法，es6使用class关键字
+        function Tea(type) {
+            this.type = type;
+            console.log('准备泡一杯' + this.type);
+        }
+
+        // 模板方法
+        Tea.prototype.boilWater = function() {
+            console.log('把水煮沸');
+        }
+
+        Tea.prototype.brew = function() {
+            console.log('用沸水浸泡茶叶');
+        }
+
+        Tea.prototype.pourInCup = function() {
+            console.log('把茶倒进杯子');
+        }
+
+        Tea.prototype.addLemon = function() {
+            console.log('加柠檬');
+        }
+
+        var greenTea = new Tea('绿茶');
+        var redTea = new Tea('红茶');
+    </script>
+</body>
+</html>
