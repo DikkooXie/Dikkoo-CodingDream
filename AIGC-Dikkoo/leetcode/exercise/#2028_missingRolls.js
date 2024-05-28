@@ -25,6 +25,7 @@ var missingRolls = function(rolls, mean, n) {
     for(let i = 0; i < n-1; i++) {
         sum -= avg;
         missingRolls.push(avg);
+        avg = Math.floor(sum / (n - i - 1));
     }
 
     console.log(sum);
@@ -34,9 +35,3 @@ var missingRolls = function(rolls, mean, n) {
         missingRolls.push(sum); // 最后一个缺失骰子的点数
     return missingRolls;
 };
-
-rolls = [4,5,6,2,3,6,5,4,6,4,5,1,6,3,1,4,5,5,3,2,3,5,3,2,1,5,4,3,5,1,5];
-mean = 4;
-n = 40;
-
-console.log(missingRolls(rolls, mean, n));
