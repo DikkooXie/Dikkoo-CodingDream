@@ -4,16 +4,20 @@
  */
 var maximumLength = function(s) {
     const check = (x) => {
-        for(let i = 0; i < s.length;) {
-            let flag = true;
-            for(let j = i; j < i + x; j++) {
-                if(s[j] === s[j + x]) {
-                    flag = false;
-                    break;
-                }
+        let alphabet = Array.from({length: 26}, () => 0);
+        let count = 0;
+        for(let i = 0; i < n; i ++) {
+            count ++;
+            if(i+1 === n || s[i] !== s[i+1]) {
+                alphabet[s[i].charCodeAt(0) - 'a'.charCodeAt(0)] += Math.max(0, count - x + 1);
+                count = 0;
             }
-            if(flag) return true;
         }
+        alphabet.sort((a, b) => b - a);
+            if(alphabet[0] >= 3)
+                return true;
+            else
+                return false;
     }
 
     const n = s.length;
@@ -21,16 +25,19 @@ var maximumLength = function(s) {
     let right = n;
 
     while(left <= right) {
-        let mid = left + (right - left) / 2;
+        let mid = left + ((right - left) >> 1);
         if(check(mid)) {
-            left = mid;
+            left = mid + 1;
         } else {
             right = mid - 1;
         }
     }
 
-    if(left === 0)
+    if(right === 0)
         return -1;
     else
-        return left;
+        return right;
 };
+
+// Test case
+console.log(maximumLength("abcccccdddd"));
