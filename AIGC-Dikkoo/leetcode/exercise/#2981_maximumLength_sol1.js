@@ -1,3 +1,6 @@
+// 分类讨论解法，可同时通过#2982题
+// 时间复杂度：O(nlogn)
+
 /**
  * @param {string} s
  * @return {number}
