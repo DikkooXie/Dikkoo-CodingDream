@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul,
+li {
+  list-style: none;
+}
+.accordion {
+  display: flex;
+  width: 600px;
+  height: 200px;
+}
+.accordion li {
+  flex: 1;
+  cursor: pointer;
+  line-height: 200px;
+  text-align: center;
+  color: #fff;
+  transition: flex 0.5s;
+}
+.accordion li:nth-child(1) {
+  background: #f66;
+}
+.accordion li:nth-child(2) {
+  background: #66f;
+}
+.accordion li:nth-child(3) {
+  background: #f90;
+}
+.accordion li:nth-child(4) {
+  background: #09f;
+}
+.accordion li:nth-child(5) {
+  background: #9c3;
+}
+.accordion li:nth-child(6) {
+  background: #c93;
+}
+.accordion li:hover {
+  flex: 2;
+}
