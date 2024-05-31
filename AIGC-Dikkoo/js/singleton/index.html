@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict";
+        // 对象字面量
+        const  duck = {
+            nickname: '黄黄',
+            singing: function() {
+                console.log('嘎嘎嘎')
+            }
+        }
+        // 传统的面向对象 原型式的面向对象
+        // 构造函数
+        function Duck(nickname) {
+            this.nickname = nickname
+        }
+        
+        // 原型
+        Duck.prototype.singing = function() {
+            console.log('嘎嘎嘎');
+        }
+
+        // 实例
+        const yw = new Duck('鸭王');
+        yw.singing();
+
+        // JS本没有类的概念，但是有构造函数
+        // 函数大写字母开头，用 new 运算符执行构造函数，同时函数的this指向实例对象
+    </script>
+</body>
+</html>
