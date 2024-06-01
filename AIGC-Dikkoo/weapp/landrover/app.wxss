@@ -1,0 +1,57 @@
+.section {
+  /*自适应单位，100份， 等比例*/
+  height: 100vh;
+}
+.hero.white{
+  background: #fff;
+}
+image {
+  display: block;
+  width: 100%;
+}
+.hero image {
+  height: 38.2vh;
+}
+.hero .content {
+  padding-top:10%;
+}
+.hero .content.centered {
+  text-align: center;
+}
+
+.hero .sub-header {
+  /*设计稿，750px */
+  font-size: 32rpx;/*微信专有单位，16px一样，不同的手机上等比例*/
+  text-transform: uppercase;
+  letter-spacing:3px;
+  margin-bottom:16rpx;
+  color: rgba(0,0,0,0.85);
+}
+.hero .header {
+  font-size: 72rpx;
+  font-weight: bold;
+  margin: 0 12% 16rpx;
+}
+.hero .description {
+  padding: 0 12%;
+  margin-bottom:64rpx;
+}
+.action {
+  text-align:center;
+  padding:48px;
+}
+.button {
+  margin: 8rpx 16rpx;
+  display:inline-block;
+  background:#e0e1e2;
+  padding: 0 24px;
+  color: rgba(0,0,0,0.6);
+  font-weight:bold;
+  border-radius: 2rpx;
+  font-size: 32rpx;
+  transition: 0.3s all;
+}
+.button.primary {
+  background: #000;
+  color: rgba(255,255,255,0.9);
+}

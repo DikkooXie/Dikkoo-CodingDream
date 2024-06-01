@@ -1,0 +1,47 @@
+.cards {
+  padding: 32rpx;
+}
+
+.card {
+  background-color: #fff;
+  margin-bottom: 32rpx;
+  transition: .5s all;
+}
+
+.card image {
+  position: relative;
+  height: 36vh;
+  
+}
+
+.card .content {
+  padding: 48rpx 48rpx 64rpx;
+}
+
+.card .header{
+  font-size: 48rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}
+
+.card .sub-header {
+  font-size: 32rpx;
+  letter-spacing: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 48rpx;
+}
+
+.card .sub-header::after {
+  content: "";
+  display: block;
+  width: 120rpx;
+  border-bottom: 2px solid #000;
+  padding-bottom: 16rpx;
+}
+
+.car .description, .card .meta {
+  margin-bottom: 16rpx;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 32rpx;
+}
