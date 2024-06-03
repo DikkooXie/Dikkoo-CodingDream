@@ -85,3 +85,8 @@ body {
 .weui-btn--warn {
     background-color: #e64340;
 }
+
+.weui-btn--disabled {
+    color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.05);
+}
