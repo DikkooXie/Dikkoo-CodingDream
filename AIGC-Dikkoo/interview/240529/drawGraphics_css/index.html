@@ -13,12 +13,19 @@
         background-color: green;
     }
 
+    .ellipse {
+        width: 150px;
+        height: 100px;
+        background-color: #00f;
+        border-radius: 50%;
+    }
+
     .triangle { /* 三角形 */
         width: 0;
         height: 0;
-        border-left: 50px solid transparent; /* 左边50px透明 */
-        border-right: 50px solid transparent; /* 右边50px透明 */
-        border-bottom: 100px solid red;
+        border-top: 50px solid transparent;
+        border-bottom: 50px solid transparent;
+        border-right: 100px solid #0f0;
     }
 
     .sector { /* 扇形 */
@@ -41,6 +48,7 @@
 </style>
 <body>
     <div class="circle"></div>
+    <div class="ellipse"></div>
     <div class="triangle"></div>
     <div class="sector"></div>
     <div class="trapezoid"></div>
