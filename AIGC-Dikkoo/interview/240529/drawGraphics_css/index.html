@@ -17,7 +17,7 @@
         width: 150px;
         height: 100px;
         background-color: #00f;
-        border-radius: 50%;
+        border-radius: 50% / 50%;
     }
 
     .triangle { /* 三角形 */
@@ -31,19 +31,37 @@
     .sector { /* 扇形 */
         width: 0;
         height: 0;
-        border-left: 50px solid transparent;
-        border-right: 50px solid transparent;
-        border-bottom: 100px solid blue;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 200px solid blue;
         border-radius: 50%;
-        transform: rotate(45deg); /* 旋转45度 */
+        margin: 20px;
+        /* transform: rotate(45deg); 旋转45度 */
     }
 
     .trapezoid { /* 梯形 */
-        width: 100px;
+        width: 150px;
         height: 0;
-        border-left: 50px solid transparent;
-        border-right: 50px solid transparent;
-        border-bottom: 100px solid pink;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 200px solid pink;
+        margin: 30px;
+    }
+
+    .parallelogram {
+        width: 300px;
+        height: 200px;
+        background-color: #ffa500;
+        transform: skew(20deg);
+        margin: 60px;
+    }
+
+    .diamond {
+        width: 100px;
+        height: 100px;
+        background-color: #00ced1;
+        transform: rotate(45deg);
+        margin: 40px;
     }
 </style>
 <body>
@@ -52,5 +70,7 @@
     <div class="triangle"></div>
     <div class="sector"></div>
     <div class="trapezoid"></div>
+    <div class="parallelogram"></div>
+    <div class="diamond"></div>
 </body>
 </html>
