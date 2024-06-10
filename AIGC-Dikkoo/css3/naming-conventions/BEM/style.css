@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+body, html {
+    height: 100%;
+    -webkit-tap-highlight-color: transparent; /* 禁止点击高亮 */
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.page, body {
+    background-color: #ededed;
+}
+
+.page {
+    position: absolute;
+    /* 原点对齐 */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; /* 页面超出时自动有滚动条 */
+    -webkit-overflow-scrolling: touch; /* 滚动触控感知，含滚动加速度、急停等 */
+}
+
+.page__hd {
+    padding: 40px;
+}
+
+.page__title {
+    font-size: 20px; /* 默认16px */
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.page__desc {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.55);
+    text-align: left;
+    margin-top: 4px;
+}
+
+.button-sp-area {
+    margin: 15px auto; /* 左右自动，用于居中 */
+    padding: 15px;
+    text-align: center;
+}
+
+.weui-btn {
+    display: block; /*inline -> block*/
+    width: 120px;
+    margin: 0px auto; /* 左右自动，用于居中 */
+    padding: 12px 24px;
+    border-radius: 8px;
+    -webkit-user-select: none; /* webkit代表chrome,safari等内核，防止长按选中文本，实验属性 */
+    user-select: none; /* 防止长按选中文本 */
+    /* 字体属性 */
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    line-height: 1.4118;
+}
+
+/* 兄弟选择器设置按钮间距 */
+.weui-btn+.weui-btn {
+    margin-top: 16px;
+}
+
+.weui-btn--primary {
+    background-color: #07c160;
+}
+
+.weui-btn--default {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.weui-btn--warn {
+    background-color: #e64340;
+}
+
+.weui-btn--disabled {
+    color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.05);
+}
