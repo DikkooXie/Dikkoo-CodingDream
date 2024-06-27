@@ -1,6 +1,8 @@
 // es6 module
 import ReactDOM from 'react-dom/client';
 import React from 'react';
+// 组件导入
+import App from './app/app.jsx';
 
 // 1. 通过createRoot创建一个Root对象
 const root = ReactDOM.createRoot(
@@ -24,3 +26,5 @@ root.render(element);
 const element2 = React.createElement('h2', {id: 'name'}, 'Hello, React2!');
 root.render(element2);
 
+// 4. 渲染组件
+root.render(<App />);
