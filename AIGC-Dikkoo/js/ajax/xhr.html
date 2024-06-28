@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="getMovieList()">获取电影列表</button>
+    <ul id="ul"></ul>
+</body>
+<script>
+    let btn = document.getElementById('btn');
+    let ul = document.getElementById('ul');
+
+    function getMovieList() {
+        // 朝后端发送一个请求，获取需要的数据
+        let xhr = new XMLHttpRequest(); // 创建xhr实例
+        xhr.open('GET', 'https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList', true); // 配置请求
+        xhr.send(); // 发送请求
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const movieList = JSON.parse(xhr.responseText).movieList;
+                const listLength = movieList.length;
+                for (let i = 0; i < listLength; i++) {
+                    const li = document.createElement('li');
+                    li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
+                    ul.appendChild(li);
+                }
+            }
+        } // 检测请求的每个阶段
+
+        // readyState
+        // 0: 未调用open()初始化请求
+        // 1: 已使用open()
+        // 2: 已调用send()，且头部和状态已可获得
+        // 3: 数据下载中，responseText中已有部分数据
+        // 4: 数据下载完成
+    };
+</script>
+</html>

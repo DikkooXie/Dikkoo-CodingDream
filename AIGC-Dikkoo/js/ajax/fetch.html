@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES7的fetch获取电影列表</title>
+</head>
+<body>
+    <button onclick="getMovieList()">获取电影列表</button>
+    <ul id="ul"></ul>
+    <script>
+        function getMovieList() {
+            fetch('https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList')
+            .then(res => res.json())
+            .then(res => {
+                const movieList = res.movieList;
+                const listLength = movieList.length;
+                for (let i = 0; i < listLength; i++) {
+                    const li = document.createElement('li');
+                    li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
+                    document.getElementById('ul').appendChild(li);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
