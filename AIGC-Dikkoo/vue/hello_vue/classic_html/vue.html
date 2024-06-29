@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0/dist/vue.global.prod.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        const {createApp} = Vue;
+        createApp({
+            template: `
+                <div>
+                    <h2>{{ num }}</h2>
+                    <button @click="minus">-1</button>
+                    <button @click="plus">+1</button>
+                </div>
+            `,
+            data: function() {
+                return {
+                    num: 0,
+                }
+            },
+            methods: {
+                minus() {
+                    this.num--;
+                },
+                plus() {
+                    this.num++;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
