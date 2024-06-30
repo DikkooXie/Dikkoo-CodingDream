@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端存储-Cookie</title>
+    <script src="./cookie.js"></script>
+</head>
+<body>
+    <script>
+        const cookieHandler = new CookieManager();
+        console.log(cookieHandler);
+        cookieHandler.setCookie('name', 'dikkoo', 1); // 设置cookie(键，值，过期时间)
+        cookieHandler.removeCookie('name'); // 删除cookie
+    </script>
+</body>
+</html>

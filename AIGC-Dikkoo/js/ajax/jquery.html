@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery获取电影列表</title>
+</head>
+<body>
+    <button onclick="getMovieList()">获取电影列表</button>
+    <ul id="ul"></ul>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function getMovieList() {
+            $.ajax({
+                url: 'https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList',
+                type: 'GET',
+                // data: {
+                //     page: 1,
+                //     count: 10
+                // },
+                success: function (res) {
+                    const movieList = res.movieList;
+                    const listLength = movieList.length;
+                    for (let i = 0; i < listLength; i++) {
+                        const li = document.createElement('li');
+                        li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
+                        $('#ul').append(li);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios获取电影列表</title>
+</head>
+<body>
+    <button onclick="getMovieList()">获取电影列表</button>
+    <ul id="ul"></ul>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function getMovieList() {
+            axios.get('https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList')
+            .then(res => { // res是返回的请求体对象，包含了请求的所有信息
+                // res.data是请求体中的数据
+                const movieList = res.data.movieList;
+                const listLength = movieList.length;
+                for (let i = 0; i < listLength; i++) {
+                    const li = document.createElement('li');
+                    li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
+                    document.getElementById('ul').appendChild(li);
+                }
+            })
+        }
+    </script>
+</body>
+</html>
