@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="getData">获取数据</button>
+    <ul id="ul"></ul>
+</body>
+<script>
+    let ul = document.getElementById('ul');
+    function getData() {
+        const request = new Promise((resolve,reject)=>{
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList');
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        resolve(JSON.parse(responseText).movieList);
+                    }else{
+                        reject('请求失败');
+                    }
+                }
+            }
+        });
+
+        request.then((res)=>{ // 此时的res就是resolve传递的参数
+            const listLength = res.length;
+            for(let i = 0; i < listLength; i++){
+                let li = document.createElement('li');
+                li.innerHTML = res;
+                ul.appendChild(li);
+            }
+        },(err)=>{
+            console.log(err);
+        });
+    }
+</script>
+</html>
