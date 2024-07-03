@@ -1,0 +1,11 @@
+.todo-app {
+    text-align: center;
+    margin: 0 auto;
+    min-width: 400px;
+}
+
+.todo-app__title {
+    font-size: 2em; /* em：相对于父元素的字体大小，默认1em = 16px */
+    margin: 20px 0;
+    
+}
