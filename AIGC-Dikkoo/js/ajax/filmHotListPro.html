@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电影热度榜</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4604700_agt9jqf1am.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        .list-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .refresh-button {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+            color: #007BFF;
+        }
+
+        .refresh-button:hover {
+            color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .movie-rank {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .gold {
+            color: gold;
+            font-size: 1.2em;
+        }
+
+        .silver {
+            color: silver;
+            font-size: 1.2em;
+        }
+
+        .bronze {
+            color: #cd7f32;
+            font-size: 1.2em;
+        }
+
+        .normal {
+            color: gray;
+            opacity: 0.6;
+        }
+
+        .movie-img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .movie-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .movie-name {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .movie-detail {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <header class="list-header">
+      <h1 class="list-title">
+        <i class="iconfont icon-dianying icon"></i>
+        电影热度榜
+      </h1>
+      <button class="refresh-button" onclick="refreshMovieList()">
+        <i class="iconfont icon-weibiaoti--"></i>
+        换一换
+      </button>
+    </header>
+    <ul id="movieList"></ul>
+  </div>
+</body>
+<script>
+let movieList = [];
+let currentIndex = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  getMovieList();
+});
+
+function getMovieList() {
+  let xhr = new XMLHttpRequest(); // 创建xhr实例
+  xhr.open('GET', 'https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList', true); // 配置一个HTTP请求
+  xhr.send(); // 发送请求
+  xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          movieList = JSON.parse(xhr.responseText).movieList; // 将请求返回的数据转换为JSON格式
+          movieList.sort((a, b) => b.wish - a.wish); // 按热度排序
+          displayMovies();
+      }
+  };
+}
+
+function displayMovies() {
+  const ul = document.getElementById('movieList'); // 获取ul元素
+  ul.innerHTML = ''; // 清空之前的列表
+
+  const maxDisplayCount = 3;
+  let displayCount = 0;
+  while (displayCount < maxDisplayCount && currentIndex < movieList.length) {
+      const movie = movieList[currentIndex];
+      const li = document.createElement('li');
+      let rankClass = 'normal';
+      let rankSymbol = (currentIndex + 1).toString();
+
+      if (currentIndex === 0) {
+          rankClass = 'gold';
+      } else if (currentIndex === 1) {
+          rankClass = 'silver';
+      } else if (currentIndex === 2) {
+          rankClass = 'bronze';
+      }
+
+      li.innerHTML = `
+          <span class="movie-rank ${rankClass}">${rankSymbol}</span>
+          <img class="movie-img" src="${movie.img}" alt="${movie.nm}">
+          <div class="movie-info">
+              <div class="movie-name">${movie.nm}</div>
+              <div class="movie-detail">评分: ${movie.sc}</div>
+              <div class="movie-detail">上映时间: ${movie.comingTitle}</div>
+              <div class="movie-detail">演员: ${movie.star}</div>
+              <div class="movie-detail">${movie.wish}人想看</div>
+          </div>
+      `;
+      ul.appendChild(li);
+      displayCount++;
+      currentIndex++;
+  }
+
+  // 如果到达列表末尾，重置索引以循环显示
+  if (currentIndex >= movieList.length) {
+      currentIndex = 0;
+  }
+}
+
+function refreshMovieList() {
+  displayMovies();
+}
+</script>
+</html>

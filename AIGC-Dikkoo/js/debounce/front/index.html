@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    没有防抖的input
+    <input 
+        type="text" 
+        id="unDebounce" 
+        placeholder="请输入要搜索的用户名"
+    >
+    有防抖的input
+    <input 
+        type="text" 
+        id="debounce" 
+        placeholder="请输入要搜索的用户名"
+    >
+    <script>
+        const inputa = document.getElementById('unDebounce');
+        
+        /**
+         *  无防抖的输入框搜索
+         **/
+        function handleNameSearch(e) {
+            const value = e.target.value;
+            fetch(`http://localhost:3000/users`)
+                .then(res => res.json())
+                .then(data => {
+                    const users = data;
+                    // 数组上es6的新方法：filter过滤 与 map转换
+                    const result = users.filter(user => { // 返回一个布尔值，如果为true则保留，否则过滤掉
+                        /** 
+                         * 方法一：includes()方法 **推荐**
+                         * 判断字符串中是否包含指定的子字符串，如果包含则返回true，否则返回false
+                         **/ 
+                        return user.name.includes(value);
+                        /** 
+                         * 方法二：indexOf()方法 **不推荐**
+                         * 返回调用它的String对象中第一次出现的指定值的索引，如果未找到该值，则返回-1
+                         * 但是这个方法不支持Unicode字符，且语义化不强，不推荐使用
+                         **/
+                        // return user.name.indexOf(value) > -1;
+                    });
+                    console.log(result);
+                });
+        }
+        inputa.addEventListener('keyup', handleNameSearch);
+
+        const inputb = document.getElementById('debounce');
+
+        /**
+         * 防抖函数
+         * @param {Function} fn 要执行的函数
+         * @param {Number} delay 延迟时间
+         * @returns {Function} 返回一个函数
+         **/
+        function debounce(fn, delay) {
+            let timer = null;
+            return function() { // 闭包
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(() => {
+                    fn.apply(this, arguments); // apply()方法调用一个具有给定this值的函数，以及作为一个数组（或类似数组对象）提供的参数
+                }, delay);
+            }
+        }
+        inputb.addEventListener('keyup', debounce(handleNameSearch, 500));
+    </script>
+</body>
+</html>
