@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>call/apply/bind 方法</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let obj = {
+        name: 'dikkoo',
+        getName: function(...args) { // 使用rest参数
+            console.log(args); // []
+            console.log(this.name);
+        }
+    }
+
+    obj.getName(); // dikkoo
+
+    let obj2 = {
+        name: 'bob'
+    }
+
+    // 问题：如何让obj2调用obj的getName方法，输出bob？
+
+    // 方法一：使用call()方法
+    // call()方法的第一个参数是要绑定的this对象，后面的参数（不限个数）是传入的参数
+    obj.getName.call(obj2, 1, 2); // bob
+
+    // 方法二：使用apply()方法
+    // apply()方法的第一个参数是要绑定的this对象，第二个参数是传入的参数数组，数组中的每个元素都会作为参数传入。
+    obj.getName.apply(obj2, [1, 2]); // bob
+
+    // 方法三：使用bind()方法
+    // bind()方法会创建一个新函数，当这个新函数被调用时，它的this值是传递给bind()的值。
+    let getName = obj.getName.bind(obj2);
+    getName(1, 2); // bob
+    // 或者：obj.getName.bind(obj2)(1, 2); // bob
+</script>
+</html>

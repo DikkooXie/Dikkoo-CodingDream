@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写Hash Router</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul>
+            <!-- 使用hash路由：#/ + 路由 -->
+            <li><a href="#/page1">page1</a></li>
+            <!-- 使用history路由: / + 路由 -->
+            <!-- <li><a href="/page2">page2</a></li> -->
+            <li><a href="#/page2">page2</a></li>
+            <li><a href="#/page3">page3</a></li>
+            <li><a href="#/page114514">unknow page</a></li>
+            <li><a href="#/pageReg">register router</a></li>
+            <li><a href="#/">back to index</a></li>
+        </ul>
+    </nav>
+    <!-- router-view -->
+    <div id="container"></div>
+</body>
+<script>
+    // 封装HashRouter类，实现路由注册和路由处理
+    class HashRouter {
+        constructor() {
+            this.routers = {
+                '/': function() {
+                    container.innerHTML = 'index';
+                },
+                // #/page1 : page1 -> container
+                '/page1': function() {
+                    container.innerHTML = 'page1';
+                },
+                // #/page2 : page2 -> container
+                '/page2': function() {
+                    container.innerHTML = 'page2';
+                },
+                // #/page3 : page3 -> container
+                '/page3': function() {
+                    container.innerHTML = 'page3';
+                }
+            }; // 设置一个路由对象，用于保存路由（路由地址：回调函数）
+            window.addEventListener('hashchange', // 监听hash变化
+                this.load.bind(this),             // 将load()方法绑定到HashRouter实例上，确保this指向正确
+                /**
+                 *  事件监听函数中的this指向的是触发事件的元素，而不是HashRouter实例。
+                 *  如果不绑定this，this指向的是window，而不是HashRouter实例。
+                 *  bind()方法会创建一个新函数，当这个新函数被调用时，它的this值是传递给bind()的值。
+                 */
+                false // 事件冒泡（默认为false）
+            );
+        }
+
+        /**
+         * 注册路由
+         * @param {string} url          路由地址
+         * @param {function} callback   路由回调
+         */
+        register(url, callback = function() {}) { // 默认回调函数为空函数
+            this.routers[url] = callback; // 将路由回调函数存储到路由对象中
+        }
+
+        /**
+         * 路由处理
+         */
+        load() {
+            // console.log(location.hash.slice(1)); 
+            let hash = location.hash.slice(1); // 获取hash值
+            // location是window对象的属性，hash存储URL的hash部分（#号后的部分），slice(1)去掉#号得到路由
+            this.routers[hash] ? this.routers[hash]() : this.routers['/'](); // 路由存在则执行，否则跳转到首页
+        }
+    }
+
+    // 实例化HashRouter
+    const hashRouter = new HashRouter();
+    const container = document.getElementById('container');
+
+    // 注册路由
+    hashRouter.register('/pageReg', function() {
+        container.innerHTML = 'router registed';
+    });
+
+    // 查看路由
+    console.log(hashRouter.routers);
+
+    // 初始化路由
+    hashRouter.load(); // 要考虑到用户直接通过url访问页面的情况，所以需要在页面加载时初始化路由
+</script>
+</html>
