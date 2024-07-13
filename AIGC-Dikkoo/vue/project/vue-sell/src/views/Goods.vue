@@ -38,7 +38,7 @@
                                     <span class="old" v-show="food.oldPrice">￥{{ food.oldPrice }}</span>
                                 </div>
                                 <div class="cartcontrol-warp">
-                                    +
+                                    <CartControl :food="food" @update:food="updateFood" />
                                 </div>
                             </div>
                         </li>
@@ -47,17 +47,27 @@
             </div>
         </div>
     </div>
+    <ShopCart :cartFoods="state.cartFoods" :seller="props.seller"/>
 </template>
 
 <script setup>
-import SupportIcon from '@/components/support-icon/Index.vue'
+import { ref, reactive, nextTick, computed, defineProps } from 'vue';
 import { getGoods } from '@/api';
-import { ref, reactive, nextTick, computed } from 'vue';
 import BScroll from '@better-scroll/core'
+import SupportIcon from '@/components/support-icon/Index.vue'
+import CartControl from '@/components/cart-control/Index.vue'
+import ShopCart from '@/components/shop-cart/Index.vue'
 
 const menuWarp = ref(null);
 const foodsWarp = ref(null);
 const foodList = ref(null);
+
+const props = defineProps({
+    seller: {
+        type: Object,
+        default: () => {}
+    }
+});
 
 // 滚动效果
 const initScroll = () => {
@@ -81,7 +91,8 @@ const state = reactive({
     goods: [],
     foodsScroll: null,
     listHeight: [],
-    scrollY: 0
+    scrollY: 0,
+    cartFoods: [] // 购物车中的菜品
 });
 
 const selectIndex = computed(() => {
@@ -118,6 +129,21 @@ const _calculateHeight = () => {
         state.listHeight.push(sumHeight);
     });
     console.log(state.listHeight);
+};
+
+// 更新购物车
+const updateFood = () => {
+    console.log('updateFood');
+    // 将拥有count属性的菜品过滤出来
+    const res = [];
+    for(let good of state.goods) {
+        for(let food of good.foods) {
+            if(food.count) {
+                res.push(food);
+            }
+        }
+    }
+    state.cartFoods = res;
 };
 </script>
 
@@ -219,7 +245,7 @@ const _calculateHeight = () => {
             .cartcontrol-warp {
                 position: absolute;
                 right: 0;
-                bottom: 12px;
+                bottom: 0;
             }
         }
     }

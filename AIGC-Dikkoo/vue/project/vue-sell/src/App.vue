@@ -12,7 +12,7 @@
     </div>
   </div>
   
-  <router-view></router-view>
+  <router-view :seller="sellerData"></router-view>
 </template>
 
 <script setup>
