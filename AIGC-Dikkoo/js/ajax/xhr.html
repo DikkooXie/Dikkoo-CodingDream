@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>电影热度榜</title>
 </head>
 <body>
     <button onclick="getMovieList()">获取电影列表</button>
-    <ul id="ul"></ul>
+    <ul id="hotList"></ul>
 </body>
 <script>
-    let btn = document.getElementById('btn');
-    let ul = document.getElementById('ul');
+function getMovieList() { // 朝后端接口发送一个请求，获取需要的数据
 
-    function getMovieList() {
-        // 朝后端发送一个请求，获取需要的数据
-        let xhr = new XMLHttpRequest(); // 创建xhr实例
-        xhr.open('GET', 'https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList', true); // 配置请求
-        xhr.send(); // 发送请求
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const movieList = JSON.parse(xhr.responseText).movieList;
-                const listLength = movieList.length;
-                for (let i = 0; i < listLength; i++) {
-                    const li = document.createElement('li');
-                    li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
-                    ul.appendChild(li);
-                }
+    let xhr = new XMLHttpRequest(); // 创建xhr实例
+
+    xhr.open( // 配置一个HTTP请求
+    'GET', // 请求方法
+    'https://mock.mengxuegu.com/mock/65a91543c4cd67421b34c898/movie/movieList', // 请求地址
+    true //是否异步
+    );
+
+    xhr.send(); // 发送请求
+
+    xhr.onreadystatechange = () => {
+        // 判断 **请求完成** 并且 **请求成功**
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 将请求返回的数据转换为 **JSON格式**，并将其中的movieList取出
+            const movieList = JSON.parse(xhr.responseText).movieList;
+            // 小小的性能优化，把数组长度直接取出放入内存，便于for循环取用
+            const listLength = movieList.length;
+            for (let i = 0; i < listLength; i++) { // 遍历movieList，将数据渲染到页面上
+                const li = document.createElement('li');
+                li.innerText = `${movieList[i].nm} -- ${movieList[i].star}`;
+                ul.appendChild(li);
             }
-        } // 检测请求的每个阶段
-
-        // readyState
-        // 0: 未调用open()初始化请求
-        // 1: 已使用open()
-        // 2: 已调用send()，且头部和状态已可获得
-        // 3: 数据下载中，responseText中已有部分数据
-        // 4: 数据下载完成
+        }
     };
+};
 </script>
 </html>

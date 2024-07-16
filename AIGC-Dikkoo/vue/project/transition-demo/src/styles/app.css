@@ -1,0 +1,89 @@
+input[type='text'],
+textarea,
+select {
+    padding: 4px 8px;
+    margin: 8px 0;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+label {
+    margin-left: 4px;
+}
+
+.page {
+    padding: 32px;
+    margin: 32px;
+}
+
+.emoji {
+    font-size: 80px;
+    transition: 0.5s;
+    /* 添加过渡动画 */
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateX(30px);
+    /* 添加过渡动画 */
+}
+
+/* transition 默认类名 */
+/* .v-enter-from {
+  opacity: 0;
+}
+
+.v-enter-active {
+    transition: .3s;
+}
+
+.v-enter-to {
+    opacity: 1;
+} */
+
+/* .v-leave-from {
+  opacity: 1;
+}
+
+.v-leave-active {
+    transition: 3s;
+}
+
+.v-leave-to {
+    opacity: 0;
+} */
+
+/* trainsition name 自定义类名 */
+.slide-enter-from {
+    transform: translateX(-30px);
+}
+
+.slide-enter-active {
+    transition: .3s;
+}
+
+.slide-enter-to {
+    opacity: 1;
+}
+
+.slide-leave-from {
+    opacity: 1;
+}
+
+.slide-leave-active {
+    transition: .3s;
+}
+
+.slide-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+/* transition 实现 pulse 进出动画 */
+.paulse-enter-active {
+    animation: pulse 1s;
+}
+
+.paulse-leave-active {
+    animation: pulse 1s;
+}

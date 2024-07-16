@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/weather.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-天气预报</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="container"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+  <!-- 高德API引入（明文） -->
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: "8e087e26b362f31a94833911093b2c8f",
+    };
+  </script>
+  <script
+    type="text/javascript"
+    src="https://webapi.amap.com/maps?v=2.0&key=116c913ecf5f838d423006d3088f3398"
+  ></script>
+  <script type="text/javascript">
+    //地图初始化应该在地图容器div已经添加到DOM树之后
+    var map = new AMap.Map("container", {
+      zoom: 12,
+    });
+  </script>
+</html>

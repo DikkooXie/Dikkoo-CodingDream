@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+    <div class="row">
+        <div>
+            没有节流的input：<input type="text" id="inputa">
+        </div>
+        <div>
+            有节流的input：<input type="text" id="inputb">
+        </div>
+    </div>
+    <script>
+        const inputa = document.getElementById('inputa');
+        const inputb = document.getElementById('inputb');
+
+        // 耗时耗性能的任务 -> promise
+        const ajax = (content) => {
+            console.log(`ajax request: ${content}`);
+        }
+
+        // 未节流
+        inputa.addEventListener('keyup', (e) => {
+            ajax(e.target.value);
+        });
+
+        // 节流
+
+        /**
+         * 节流功能函数
+         * @param {Function} fn 要执行的函数
+         * @param {Number} delay 延迟时间
+         */
+        const throttle = (fn, delay) => {
+            let last = 0; // 上一次执行时间
+            let deferTimer = null; // 定时器
+
+            return (args) => {
+                let now = +new Date(); // 当前时间；'+' 隐式类型转换，将字符串转换为数字
+
+                /**
+                 * 判断是否不是第一次执行 且 再次执行小于延迟时间
+                 * - 是：清除定时器，重新设置定时器
+                 * - 否：更新上一次执行时间，执行函数
+                 **/
+                if(last && now < last + delay) {
+                    clearTimeout(deferTimer); // 清除定时器
+                    deferTimer = setTimeout(() => { // 重新设置定时器
+                        last = now;
+                        fn(args);
+                    }, delay);
+                } else {
+                    last = now;
+                    fn(args);
+                }
+            }
+        }
+
+        inputb.addEventListener('keyup', throttle((e) => {
+            ajax(e.target.value);
+        }, 500));
+    </script>
+</body>
+</html>

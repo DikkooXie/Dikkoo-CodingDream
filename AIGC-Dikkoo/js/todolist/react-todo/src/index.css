@@ -1,0 +1,10 @@
+/**
+* 使用 `*` 进行样式重置，会导致以下问题：
+* 1. 导致css渲染引擎在渲染css的时候，使用 * 遍历整个DOM树，影响渲染性能;
+* 2. 由于是对所有标签元素的重置样式，因此对于不必须的样式重置也会被重置。
+* 所以，建议使用更加精确的选择器进行样式重置。
+**/
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote {
+    margin: 0;
+    padding: 0;
+}
