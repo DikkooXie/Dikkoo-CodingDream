@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css'
 
 const routes = [
     {
@@ -57,6 +59,10 @@ const routes = [
             title: '页面不存在 - 404',
             noAuth: true // 无需登录认证
         }
+    },
+    {
+        path: '/:path(.*)', // 使用正则匹配任意路径
+        redirect: '/404' // 重定向到 404 页面
     }
 ];
 
@@ -71,26 +77,33 @@ router.beforeEach((to, from, next) => {
     // from: 当前导航正要离开的路由; 
     // next: 一定要调用该方法来 resolve 这个钩子
 
+    NProgress.start(); // 开始进度条
+
     // 设置页面标题
     document.title = to.meta.title || '后台管理系统';
 
     const role = localStorage.getItem('role_name') || 'user'; // 获取用户角色
-    const permission = {
-        'admin': ['11', '12'],
-        'user': ['11']
+
+    const permission = { // 权限组 - 模拟数据（一般从后端获取）
+        'admin': ['11', '12'], // admin权限组下包含的权限
+        'user': ['11'] // user权限组下包含的权限
     };
 
     if (!to.meta.noAuth) { // 不是无需登录的页面
         if(!role) { // 未登录
             next('/login'); // 跳转到登录页
-        } else if (!permission[role].includes(to.meta.permission)) { // 无访问权限
-            next('/403');
+        } else if (!permission[role] || !permission[role].includes(to.meta.permission)) { // 用户组不存在或无访问权限
+            next('/403'); // 跳转到无访问权限页
         } else {
-            next();
+            next(); // 有访问权限，准许访问
         }
     } else { // 无需登录的页面
-        next();
+        next(); // 直接准许访问
     }
 });
+
+router.afterEach(() => {
+    NProgress.done();
+})
 
 export default router;
