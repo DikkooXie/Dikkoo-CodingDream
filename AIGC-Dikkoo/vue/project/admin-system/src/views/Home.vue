@@ -1,7 +1,6 @@
 <template>
-    <header>
-        
-    </header>
+    <v-header />
+    <sidebar />
     <div>
         Home page
         <router-view></router-view>
@@ -9,7 +8,8 @@
 </template>
 
 <script setup>
-
+import Sidebar from '../components/Sidebar.vue';
+import vHeader from '../components/Header.vue';
 </script>
 
 <style lang="css" scoped>

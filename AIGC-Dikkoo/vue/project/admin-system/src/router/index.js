@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
+import { usePermissionStore } from '../store/permission';
 
 const routes = [
     {
@@ -71,6 +72,8 @@ const router = createRouter({
     routes,
 });
 
+
+
 router.beforeEach((to, from, next) => { 
 
     // to: 即将要进入的目标路由对象;
@@ -81,18 +84,16 @@ router.beforeEach((to, from, next) => {
 
     // 设置页面标题
     document.title = to.meta.title || '后台管理系统';
+    
+    const permissionStore = usePermissionStore(); // 获取权限仓库
 
-    const role = localStorage.getItem('role_name') || 'user'; // 获取用户角色
-
-    const permission = { // 权限组 - 模拟数据（一般从后端获取）
-        'admin': ['11', '12'], // admin权限组下包含的权限
-        'user': ['11'] // user权限组下包含的权限
-    };
+    const role = permissionStore.role; // 获取用户角色
+    const permissionList = permissionStore.permissionList; // 获取权限列表
 
     if (!to.meta.noAuth) { // 不是无需登录的页面
         if(!role) { // 未登录
             next('/login'); // 跳转到登录页
-        } else if (!permission[role] || !permission[role].includes(to.meta.permission)) { // 用户组不存在或无访问权限
+        } else if (!permissionList[role] || !permissionList[role].includes(to.meta.permission)) { // 用户组不存在或无访问权限
             next('/403'); // 跳转到无访问权限页
         } else {
             next(); // 有访问权限，准许访问
