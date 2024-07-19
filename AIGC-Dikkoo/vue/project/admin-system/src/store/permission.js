@@ -50,8 +50,9 @@ export const usePermissionStore = defineStore('permission', {
         };
     },
     actions: {
-        handleSet(val) {
-            this.key = val;
+        permissionSet(role) {
+            this.role = role;
+            localStorage.setItem('role_name', role);
         }
     }
 });

@@ -2,7 +2,8 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 // 引入全局样式
-import './assets/reset.css';
+import './assets/styles/reset.css';
+import './assets/styles/variable.css';
 // 引入路由
 import router from './router';
 // element-plus 完整引入
@@ -24,3 +25,14 @@ app
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
+// 自定义指令
+import { usePermissionStore } from './store/permission';
+const permissionStore = usePermissionStore();
+app.directive('permission', {
+    mounted(el, binding) {
+        if(binding.value && permissionStore.role.includes(binding.value)) {
+            el['hidden'] = true;
+        }
+    }
+})

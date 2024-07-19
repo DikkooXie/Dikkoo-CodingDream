@@ -49,10 +49,13 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { usePermissionStore } from '../store/permission';
 
 const router = useRouter();
 
 const loginForm = ref(null); // 登录表单实例对象，其中包含`.validate()`方法，用于手动触发表单验证
+
+const permissionStore = usePermissionStore();
 
 const form = reactive({ // 登录表单数据
     username: '',
@@ -80,7 +83,7 @@ const login = (formEl) => { // 传入表单实例
         if(valid) { // 验证通过
             if(form.username === 'admin' && form.password === '123456') {
                 ElMessage.success('登录成功');
-                localStorage.setItem('role_name', 'admin');
+                permissionStore.setRole('admin');
                 router.push('/');
             } else {
                 ElMessage.error('用户名或密码错误');
