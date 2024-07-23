@@ -17,7 +17,7 @@ export const createRouter = (options) => {
  * 创建 hash 模式的路由
  * @returns 
  */
-export const createHashHistory = () => {
+export const createWebHashHistory = () => {
     function bindEvents(fn) {
         window.addEventListener('hashchange', fn);
     }
