@@ -1,8 +1,5 @@
 <template>
-  <div>
-    项目初始化完成
-    <van-button type="primary">主要按钮</van-button>
-  </div>
+  <router-view />
 </template>
 
 <script setup>
