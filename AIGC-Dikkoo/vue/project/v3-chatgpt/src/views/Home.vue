@@ -1,22 +1,24 @@
 <template>
     <div class="flex flex-col h-screen">
-        <header class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100">
-            <div class="text-2xl font-bold">
+        <header class="flex flex-nowrap items-center fixed w-full top-0 px-6 py-4 bg-openai-bg">
+            <div 
+                class="cursor-pointer"
+            >
+                <img src="../assets/describe.svg" alt="历史记录" >
+            </div>
+            <div class="text-xl font-bold text-openai-title ml-auto">
                 ChatGPT
             </div>
-            <div class="ml-4 text-sm text-gray-500">
-                基于OpenAI的ChatGPT自然语言模型人工智能对话
-            </div>
             <div 
-                class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
+                class="ml-auto cursor-pointer"
                 @click="setConfig()"
             >
-                设置
+                <img src="../assets/setting-fill.svg" alt="设置" class="w-5">
             </div>
         </header>
 
         <!-- 消息列表部分 -->
-        <div class="flex-1 mx-2 mt-20 mb-2">
+        <main class="flex-1 px-2 pt-20 bg-openai-bg">
             <div 
                 class="group flex flex-col px-4 py-3 rounded-lg"
                 v-for="(item, index) in messageList.filter(item => item.role != 'system')"
@@ -43,30 +45,30 @@
                     {{ item.content }}
                 </div>
             </div>
-        </div>
+        </main>
 
         <!-- 输入框部分 -->
-        <div class="sticky bottom-0 w-full p-6 pb-8 bg-gray-100">
-            <div class="mb-2 text-sm text-gray-500" v-show="inputConfig">
+        <footer class="sticky bottom-0 w-full px-4 pb-8 bg-openai-bg">
+            <!-- <div class="pb-2 text-sm text-gray-500" v-show="inputConfig">
                 请输入API Key:
-            </div>
-            <div class="flex">
+            </div> -->
+            <div class="flex rounded-full h-full w-full bg-openai-input py-1 items-center">
                 <input 
                     v-model="inputContent"
                     :type="inputConfig ? 'password' : 'text'"
-                    :placeholder="inputConfig ? 'sh-xxxxxx' : '想聊些什么？'"
+                    :placeholder="inputConfig ? 'sh-xxxxxx' : '给 ChatGPT 发送消息'"
                     @keydown.enter="sendOrsaveConfig()"
-                    class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md"
+                    class="flex-1 text-base rounded-md bg-transparent border-none focus:outline-none pl-8 py-2 text-openai-text placeholder:text-openai-text"
                 />
                 <button 
-                    class="px-4 py-2 ml-2 text-sm text-white bg-blue-500 rounded-md disabled:opacity-50"
+                    class="w-8 h-8 mr-3 text-sm bg-white rounded-full disabled:opacity-50 flex justify-center items-center cursor-pointer hover:bg-gray-100"
                     @click="sendOrsaveConfig()"
                     :disabled="!inputContent.length || isThinking"
                 >
-                    {{ inputConfig ? '保存' : '发送' }}
+                    <img :src="inputConfig ? '@/assets/save.svg' : '@/assets/send-fill.svg'">
                 </button>
             </div>
-        </div>
+        </footer>
     </div>
 </template>
 
