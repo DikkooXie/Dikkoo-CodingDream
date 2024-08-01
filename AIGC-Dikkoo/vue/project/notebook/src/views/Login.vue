@@ -42,13 +42,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from '@/api'
 
 const username = ref('');
 const password = ref('');
 const router = useRouter();
 
-const onLogin = (values) => {
-    console.log(values);
+const onLogin = async (values) => {
+    const res = await axios.post('/user/login', values)
+    console.log(res);
 }
 </script>
 
