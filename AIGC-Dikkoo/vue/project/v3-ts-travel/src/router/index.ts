@@ -4,18 +4,34 @@ import type { RouteRecordRaw } from 'vue-router'
 const rootRoutes:RouteRecordRaw[] = [
   {
     path: '/home',
-    name: 'home',
-    component: () => import('@/views/HomePage/HomePage.vue')
+    name: 'HomePage',
+    meta: {
+      cache: true
+    },
+    component: () => import('@/views/Home/HomePage.vue')
+  },
+  {
+    path: '/discount',
+    name: 'DiscountPage',
+    meta: {
+      cache: true
+    },
+    component: () => import('@/views/Discount/DiscountPage.vue')
   }
 ]
 
 const routes:RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'root',
+    name: 'App',
     component: () => import('@/views/TheRoot.vue'),
     redirect: '/home',
     children: rootRoutes
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login.vue')
   }
 ]
 
