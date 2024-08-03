@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>HomePage</h1>
+        discount
+        <input type="text"/>
     </div>
 </template>
 
