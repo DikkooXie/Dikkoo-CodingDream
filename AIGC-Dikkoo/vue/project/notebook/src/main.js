@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import 'lib-flexible/flexible.js'
+import 'wc-waterfall'
 
 import App from './App.vue'
 import router from './router'
