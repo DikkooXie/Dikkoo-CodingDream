@@ -4,21 +4,16 @@
             <van-search placeholder="搜索" class="search-input" />
             <van-icon name="scan" class="search-scan" />
         </div>
-        <van-sticky>
-            <van-tabs v-model:active="active" swipeable @change="onTabChange">
-                <van-tab v-for="(item, index) in tabs" :key="index" :title="item.meta.title">
-                    <router-view v-slot="{Component}">
-                        <keep-alive :include="tabs.filter(tab => tab.meta.cache).map(tab => tab.name)">
-                            <component :is="Component" />
-                        </keep-alive>
-                    </router-view>
-                </van-tab>
-            </van-tabs>
-        </van-sticky>
     </header>
-    <main class="main">
-
-    </main>
+    <van-tabs v-model:active="active" swipeable @change="onTabChange" sticky>
+        <van-tab v-for="(item, index) in tabs" :key="index" :title="item.meta.title">
+            <router-view v-slot="{Component}">
+                <keep-alive :include="tabs.filter(tab => tab.meta.cache).map(tab => tab.name)">
+                    <component :is="Component" />
+                </keep-alive>
+            </router-view>
+        </van-tab>
+    </van-tabs>
 </template>
 
 <script setup>
