@@ -81,7 +81,22 @@ const routes = [
   {
     path: '/login',
     name: 'login',
+    meta: {
+      title: '登录',
+      login: false,
+      cache: false
+    },
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    meta: {
+      title: '注册',
+      login: false,
+      cache: false
+    },
+    component: () => import('../views/Register.vue')
   },
   {
     path: '/app',
@@ -97,19 +112,19 @@ const router = createRouter({
 })
 
 // 全局的路由守卫
-const whitePath = ['/login', '/register']
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
 
-// router.beforeEach((to, from, next) => {
-//   if(whitePath.includes(to.path)) {
-//     next()
-//   } else {
-//     const token = localStorage.getItem('token')
-//     if(token) {
-//       next()
-//     } else {
-//       next('/login')
-//     }
-//   }
-// })
+  if(!to.meta.login) {
+    next();
+  } else {
+    const token = localStorage.getItem('token');
+    if(token) {
+      next();
+    } else {
+      next('/login');
+    }
+  }
+})
 
 export default router
