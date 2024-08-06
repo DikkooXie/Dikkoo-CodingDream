@@ -41,6 +41,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { showNotify } from 'vant'
 import { useRouter } from 'vue-router'
 import axios from '@/api'
 
@@ -53,7 +54,14 @@ const onLogin = async (values) => {
     // console.log(res);
     // localStorage.setItem('userInfo', JSON.stringify(res.data));
     localStorage.setItem('token', res.data.token);
-    router.push('/home');
+    showNotify({
+        type: 'success',
+        message: '登录成功，即将跳转',
+        duration: 1000
+    });
+    setTimeout(() => {
+        router.push('/home');
+    }, 1000);
 }
 </script>
 
