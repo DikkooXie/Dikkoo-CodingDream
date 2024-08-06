@@ -4,6 +4,7 @@
 
 const router = require('@koa/router')(); // 直接获得实例对象
 const { userLogin } = require('../controllers/index.js');
+const jwt = require('../utils/jwt.js');
 
 router.prefix('/user');
 
@@ -22,6 +23,7 @@ router.post('/login', async (ctx) => {
         // console.log(result);
         // 返回结果
         if(result.length) {
+            // 用户信息
             const data = {
                 id: result[0].id,
                 username: result[0].username,
@@ -29,10 +31,14 @@ router.post('/login', async (ctx) => {
                 avatar: result[0].avatar
             }
 
+            // 生成token
+            const token = jwt.sign(data);
+
             ctx.body = {
                 code: '800',
                 data,
-                msg: '登录成功'
+                msg: '登录成功',
+                token
             }
         } else {
             ctx.body = {
