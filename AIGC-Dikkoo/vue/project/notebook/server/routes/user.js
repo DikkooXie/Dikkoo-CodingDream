@@ -3,7 +3,7 @@
  */
 
 const router = require('@koa/router')(); // 直接获得实例对象
-const { userLogin } = require('../controllers/index.js');
+const { userLogin, isUserExist, userRegister } = require('../controllers/index.js');
 const jwt = require('../utils/jwt.js');
 
 router.prefix('/user');
@@ -52,6 +52,57 @@ router.post('/login', async (ctx) => {
             code: '8005',
             msg: '服务器异常，请稍后再试',
             data: error
+        }
+    }
+});
+
+router.post('/register', async (ctx) => {
+    const { username, password, nickname } = ctx.request.body;
+    if (username && password && nickname) {
+        try {
+            // 判断用户名是否存在
+            const isExist = await isUserExist(username);
+            console.log(isExist);
+            if(isExist.length) {
+                ctx.body = {
+                    code: '8007',
+                    msg: '用户名已存在',
+                    data: 'error'
+                }
+            } else {
+                // 注册
+                const result = await userRegister({
+                    username,
+                    password,
+                    nickname
+                });
+
+                if(result.affectedRows === 1) {
+                    ctx.body = {
+                        code: '800',
+                        msg: '注册成功',
+                        data: 'success'
+                    }
+                } else {
+                    ctx.body = {
+                        code: '8008',
+                        msg: '注册失败',
+                        data: 'error'
+                    }
+                }
+            }
+        } catch (error) {
+            ctx.body = {
+                code: '8005',
+                msg: '服务器异常，请稍后再试',
+                data: error
+            }
+        }
+    } else { // 有参数为空
+        ctx.body = {
+            code: '8006',
+            msg: '参数错误：用户名、昵称或密码为空',
+            data: 'error'
         }
     }
 });
