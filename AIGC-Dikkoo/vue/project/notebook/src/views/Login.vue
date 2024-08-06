@@ -50,7 +50,10 @@ const router = useRouter();
 
 const onLogin = async (values) => {
     const res = await axios.post('/user/login', values)
-    console.log(res);
+    // console.log(res);
+    // localStorage.setItem('userInfo', JSON.stringify(res.data));
+    localStorage.setItem('token', res.data.token);
+    router.push('/home');
 }
 </script>
 
