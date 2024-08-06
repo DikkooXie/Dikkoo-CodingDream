@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { showToast } from 'vant'
+import { showFailToast } from 'vant'
 
 // 设置默认请求地址
 axios.defaults.baseURL = 'http://localhost:3000';
@@ -24,11 +24,11 @@ axios.interceptors.request.use(req => { // 在发送请求之前做些什么
 // 响应拦截器
 axios.interceptors.response.use(res => {
     if(res.status !== 200) {
-        showToast('服务器异常，请稍后再试 >.<');
+        showFailToast('服务器异常，请稍后再试\n>.<');
         return Promise.reject(res);
     } else if(res.data.code !== '800') {
         // 业务异常，逻辑错误
-        showToast(res.data.msg);
+        showFailToast(res.data.msg);
         return Promise.reject(res);
     } else {
         return res.data;
