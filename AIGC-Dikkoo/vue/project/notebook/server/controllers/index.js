@@ -36,7 +36,29 @@ const userLogin = (username, password) => {
     return allService.query(_sql);
 }
 
+// 查询用户是否存在
+const isUserExist = (username) => {
+    const _sql = `SELECT * FROM users WHERE username='${username}'`;
+    return allService.query(_sql);
+}
+
+/**
+ * 
+ * @param {Object: {
+ *   username: String,
+ *   password: String,
+ *   nickname: String
+ * }} values 注册信息
+ * @returns 
+ */
+const userRegister = (values) => {
+    const _sql = `INSERT INTO users (username, password, nickname) VALUES ('${values.username}', '${values.password}', '${values.nickname}')`;
+    return allService.query(_sql);
+}
+
 module.exports = {
     allService,
-    userLogin
+    userLogin,
+    isUserExist,
+    userRegister
 }
