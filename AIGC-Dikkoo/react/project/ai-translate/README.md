@@ -16,6 +16,7 @@
 - 属于前端的 AI 库
 - AI 端模型，直接在浏览器端运行，短小精悍
 - 来自全球最大AI社区，huggingFace（LLM开源社区）
+- 实例参考： https://huggingface.co/docs/transformers.js/tutorials/react/
 
 ### React
 - 组件
@@ -54,6 +55,15 @@
         - `useState()`
             - 引入一个响应式状态（类似于Vue中的ref）
             - 返回一个数组，第一个元素是状态值，第二个元素是设置状态的函数：`const [count, setCount] = useState(0);`
+        - `useRef()`
+            - 同于Vue中的`ref`，用于获取DOM元素或保存状态
+            - 返回一个对象，对象的current属性指向传入的参数：`const inputRef = useRef(null);`
+        - `useEffect()`
+            - 生命周期钩子函数，如同Vue中的:
+                - `onMounted`： useEffect 中的回调函数；
+                - `onUpdated`
+                - `onUnmounted`： useEffect 内 return 的函数；
+            - 接收两个参数，第一个参数是回调函数，第二个参数是依赖数组：`useEffect(() => { console.log('mounted'); }, []);`
     - `{ }`
         - JSX 语法中，使用大括号包裹的内容是JS表达式，类似于Vue中的`{{ }}`插值语法。
     - 父子组件通信
@@ -68,4 +78,50 @@
         - JSX 中的注释：`{/* 注释内容 */}`
 
 ### Web Worker
-- HTML5 新增的特性，浏览器提供的多线程技术
+- HTML5 新增的特性，浏览器提供的多线程技术；
+- 用于在浏览器中创建一个新的线程，使得主线程和 Worker 线程可以并行运行；
+- 主线程专注于页面渲染，Worker 线程专注于耗时任务；
+- 使用场景：
+    - 压缩
+    - 加密
+    - AI / 计算密集型任务 / 大数据处理
+- 使用方法：
+    - 创建 Worker 对象：`const worker = new Worker(new URL('./worker.js', {type: 'module'}));`
+    - 使用消息机制完成主线程和 Worker 线程的通信：
+        - 事件监听 + 事件触发
+        - 发送消息：`worker.postMessage('Hello World');`
+        - 接收消息：`worker.onmessage = (e) => { console.log(e.data); }`
+    - 终止 Worker：`worker.terminate();`
+
+#### 使用时的注意事项：
+- Web Worker毕竟是双线程，性能消耗大，要优先在渲染页面完成后（onMounted / onEffect）再实例化Web Worker，优化用户体验。
+    - 在worker组件中局部变量使用 useRef 动态绑定 worker 实例（默认为 null），在 useEffect 中实例化 worker，使得其能正常访问。
+    - 在 useEffect 中实例化；
+    ```jsx
+    const worker = useRef(null) // 响应式Web Worker对象
+
+    useEffect(() => {
+        worker.current = new Worker('./worker.js')
+        worker.current.onmessage = (e) => {
+        setOutput(e.data)
+        setDisabled(false)
+        }
+        return () => {
+        worker.current.terminate()
+        }
+    })
+    ```
+### Transformer.js
+
+#### 使用方法：
+
+1. 安装
+    - `npm install @xenova/transformers`
+    - CDN
+    ```html
+    <script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+    </script>
+    ```
+2. 使用 `pipeline()` 创建一个实例，并在参数中指定任务类型和模型名称；
+3. 使用
